@@ -1,36 +1,51 @@
-import React, { Component } from 'react';
-import './index.css';
-import io from 'socket.io-client';
+import React, { Component } from "react";
+import "./index.css";
+import io from "socket.io-client";
+import Signin from "./components/Signin/signin";
+import Login from "./components/Login/login"
+import Chat from './components/Chat/index'
+import { ProtectedRoute } from './components/protectedRoute'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 const socketUrl = "http://192.168.43.20:5000";
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      socket:null
-    }
+      socket: null,
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.initSocket();
   }
 
-  initSocket = () =>{
-  const socket = io(socketUrl);
-  socket.on('connect', () =>{
-    console.log('conected');
-  })
-  this.setState({socket})
-}
+  initSocket = () => {
+    const socket = io(socketUrl);
+    socket.on("connect", () => {
+      console.log("conected");
+    });
+    this.setState({ socket });
+  };
 
-render(){
-  return (
-    <div className="App">
-      <h>hello</h>
-    </div>
-  );
-}
+  render() {
+    return (
+      <Router>
+        <Redirect from="/" to="/signin" />
+        <Switch>
+          <Route path="/signin" component={Signin} />
+          <Route path="/login" component={Login} />
+          <ProtectedRoute path="/chat" component={Chat}/>
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;
