@@ -1,0 +1,23 @@
+.formWrapper{
+    height: 100%;
+}
+.formInner{
+    height: 100%;
+    display: flex;
+    background: #e0e0fbbd;
+}
+.formInner > form{
+    margin:auto;
+    background: white;
+    padding: 5rem;
+}
+label:before{
+    content:''!important;
+}
+.redirectText{
+    width: 85%;
+    margin: auto;
+}
+.redirectText > span{
+    margin-left:1rem;
+}
