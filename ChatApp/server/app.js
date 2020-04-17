@@ -2,12 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const port = process.env.PORT || 5000;
 const app = express();
+app.use(bodyParser.json())
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended:true
+}))
 
 app.use(cors());
 
@@ -20,13 +23,13 @@ db.once('open',()=>{console.log('dbconnected')})
 app.use(express.json());
 
 
-io.on('connect', (socket) => {
-    console.log('a user connected');
+io.of('/').on('connect', (socket) => {
+    console.log(socket.id);
   });
 
+var router = require('./routes/User')
 
-app.get('/', (req,res)=>{
-    res.send('trdtrde')
-})
 
-http.listen(5000, ()=>{console.log('server listening on port 3001')});
+app.use('/api', router)
+
+http.listen(port, ()=>{console.log(`server listening on port ${port}`)});
