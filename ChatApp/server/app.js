@@ -22,10 +22,9 @@ db.once('open',()=>{console.log('dbconnected')})
 
 app.use(express.json());
 
+var socketManager = require('./socket/Socketmanager')
 
-io.on('connect', (socket) => {
-    console.log(socket.id);
-  });
+io.on('connection', socketManager);
 
 var router = require('./routes/User')
 

@@ -11,12 +11,13 @@ process.env.SECRETKEY = "secret";
 
 router.get("/users", async (req, res) => {
   try {
-    if (req.query.q) {
-      const user = await User.find({ userId: req.query.q });
+    const query = req.query;
+    const user = await User.find({ userId: query.q });
+    console.log(query)
+    if (query.q != query.user) {
       res.send(user);
-    } else {
-      const users = await User.find();
-      res.send(users);
+    } else{
+      return
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
