@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Form, Input, Button, message } from "antd";
-import {login} from "../../axios/index";
-import auth from "../../components/auth"
-import '../Signin/index.css'
+import { login } from "../../axios/index";
+import auth from "../../components/auth";
+import "../Signin/index.css";
 
 const layout = {
   labelCol: {
@@ -16,19 +16,23 @@ const layout = {
 class Login extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      token:''
+    }
   }
   onFinish = (values) => {
-    login(values)
-    .then(res=>{
-        if(res.error){
-            message.error('Email or Password is Wrong');
-        }
-        else{
-            auth.login(() => {
-                this.props.history.push("/chat");
-              });
-        }
-    })
+    login(values).then((res) => {
+      if (res.error) {
+        message.error("Email or Password is Wrong");
+      } else {
+        console.log(res)
+        this.setState({token:res})
+        localStorage.setItem("usertoken", this.state.token);
+        auth.login(() => {
+          this.props.history.push("/chat");
+        });
+      }
+    });
   };
 
   onFinishFailed = (errorInfo) => {

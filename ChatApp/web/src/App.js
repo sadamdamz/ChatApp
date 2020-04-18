@@ -12,7 +12,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-const socketUrl = "http://192.168.43.20:5000";
+const socketUrl = "http://localhost:5000";
 
 class App extends Component {
   constructor(props) {
@@ -39,8 +39,8 @@ class App extends Component {
       <Router>
         <Redirect from="/" to="/signin" />
         <Switch>
-          <Route path="/signin" component={Signin} />
-          <Route path="/login" component={Login} />
+          <Route exact path="/signin" component={Signin} />
+          <Route exact path="/login" component={Login} />
           <ProtectedRoute path="/chat" component={Chat}/>
         </Switch>
       </Router>

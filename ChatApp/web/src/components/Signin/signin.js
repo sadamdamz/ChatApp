@@ -30,6 +30,9 @@ class Signin extends Component {
   onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  componentDidMount(){
+    localStorage.removeItem('usertoken')
+  }
 
   render() {
     return (

@@ -1,0 +1,30 @@
+.mainLayout{
+    height:100%;
+}
+.sideBar{
+    width: 25%;
+    background: #232379;
+    height: 100%;
+}
+.searchBar{
+    padding-top: 10px;
+    width: 80%;
+    padding-bottom: 1rem;
+    margin: auto;
+}
+.searchBar > span{
+    width: 100%!important;
+    border: none;
+    padding: 5px;
+    border-radius: 15px!important;
+}
+
+.user{
+    text-align: center;
+    background-color: #1d1d9c;
+    border:2px solid black;
+    margin:0!important;
+}
+.user > h1{
+    color: #f3f2f2;
+}

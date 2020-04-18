@@ -23,7 +23,7 @@ db.once('open',()=>{console.log('dbconnected')})
 app.use(express.json());
 
 
-io.of('/').on('connect', (socket) => {
+io.on('connect', (socket) => {
     console.log(socket.id);
   });
 

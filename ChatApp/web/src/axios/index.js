@@ -25,3 +25,22 @@ export const login = user => {
       console.log(err)
     })
 }
+
+export const search = q =>{
+  return axios
+  .get(`api/users?q=${q}`)
+  .then(res =>{
+      return res.data
+  })
+  .catch(err =>{
+    console.log("user not found")
+  })
+}
+
+// export const profile = token =>{
+//   return axios
+//   .get('api/profile')
+//   .then(res =>{
+//     return res.data
+//   })
+// }
