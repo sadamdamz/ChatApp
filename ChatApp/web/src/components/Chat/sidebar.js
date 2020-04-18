@@ -10,19 +10,15 @@ class SideBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: "",
+      user: [],
       profile:''
     };
   }
 
   searchUser = (value) => {
-    search(value).then((res) => {
-        if(res.length > 0 ){
-            this.setState({ user: res });
-        }
-        else{
-            this.setState({user:''})
-        }
+    search(value,this.state.profile).then((res) => {
+            this.setState({ user: [...this.state.user,...res]} );
+            console.log(this.state.user)
     });
   };
   componentDidMount() {
@@ -31,6 +27,7 @@ class SideBar extends Component {
     this.setState({
         profile:decoded.userId
     })
+
   }
 
   render() {
@@ -44,7 +41,9 @@ class SideBar extends Component {
           />
         </div>
         {
-            this.state.user!=='' ? <div key={this.state.user[0].userId} className="user"><h1>{this.state.user[0].userId}</h1></div>:''
+            this.state.user ? this.state.user.map((user) =>(
+              <div key={user.userId} className="user" onClick={()=>this.props.setUser(user.userId)}><h1>{user.userId}</h1></div>
+            )):''
         }
       </div>
     );

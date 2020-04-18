@@ -26,9 +26,9 @@ export const login = user => {
     })
 }
 
-export const search = q =>{
+export const search = (q,user) =>{
   return axios
-  .get(`api/users?q=${q}`)
+  .get(`api/users?q=${q}&user=${user}`)
   .then(res =>{
       return res.data
   })
@@ -36,11 +36,3 @@ export const search = q =>{
     console.log("user not found")
   })
 }
-
-// export const profile = token =>{
-//   return axios
-//   .get('api/profile')
-//   .then(res =>{
-//     return res.data
-//   })
-// }

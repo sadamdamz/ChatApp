@@ -1,8 +1,9 @@
 .mainLayout{
     height:100%;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
 }
 .sideBar{
-    width: 25%;
     background: #232379;
     height: 100%;
 }
@@ -27,4 +28,24 @@
 }
 .user > h1{
     color: #f3f2f2;
+}
+.chatLayout{
+    display: grid;
+    grid-template-rows: 0.7fr 10fr 0.5fr;
+}
+.header{
+    background: #232479;
+}
+.block{
+    display:block;
+}
+.searchUser{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.searchUser > h1{
+    color: #ababd4;
 }

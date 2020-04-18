@@ -1,0 +1,12 @@
+.Header{
+    background: #232479;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Header > p{
+    color: white;
+    font-weight: bold;
+    margin: 0;
+}
