@@ -65,10 +65,13 @@ class Chat extends Component {
       }
     });
     socket.on("newmessages", data => {
-      if (this.state.newinsert.indexOf(data["message"]) === -1) {
+      console.log(
+        'user messaging using live chat'
+      )
+      if (this.state.newinsert.indexOf(data["_id"]) === -1) {
         this.setState({
           chats: this.state.chats.concat(data),
-          insertedIds: this.state.newinsert.concat(data["message"])
+          insertedIds: this.state.newinsert.concat(data["_id"])
         });
       }
     });

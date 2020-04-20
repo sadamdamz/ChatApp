@@ -14,26 +14,24 @@ module.exports = function(socket){
         console.log('user connected'+ ' ' +privateUsers[userId])
     })
 
-    socket.on('sendMessage',(sender,reciever,Message)=>{
+    socket.on('sendMessage',async(sender,reciever,Message)=>{
         var user = privateUsers[reciever]
-        console.log(user);
         var data = {
             from:sender,
             to:reciever,
             message:Message
         }
-        io.to(user).emit('newmessages',(data));
         var chat = new Chat({
             from:sender,
             to:reciever,
             message:Message
         })
-        chat.save((err,data)=>{
-            if(err){
-                console.log(err)
-            }else{
-                socket.emit('recieveMessage',(data))
-            }
-        })
+        try{
+            var chats = await chat.save();
+            socket.emit('recieveMessage',chats);
+            io.to(user).emit('newmessages',chats);
+        }catch(err){
+            console.log(err);
+        }
     })
 }
