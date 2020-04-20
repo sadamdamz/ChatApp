@@ -14,6 +14,8 @@ const layout = {
   },
 };
 
+const token = localStorage.getItem('usertoken');
+
 class Signin extends Component {
   constructor(props) {
     super(props);
@@ -22,17 +24,14 @@ class Signin extends Component {
   onFinish = (values) => {
     register(values)
     .then(res=>{
-
+      this.props.history.push('/login');
     })
-    this.props.history.push('/login');
   };
 
   onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  componentDidMount(){
-    localStorage.removeItem('usertoken')
-  }
+
 
   render() {
     return (

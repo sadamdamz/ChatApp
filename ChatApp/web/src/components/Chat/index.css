@@ -49,3 +49,37 @@
 .searchUser > h1{
     color: #ababd4;
 }
+.messageForm{
+    justify-content: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10fr 1fr;
+    height: 100%;
+}
+.messageForm > div{
+    margin:0;
+}
+.buttons{
+    width:100%;
+    background:black!important;
+    border:none!important;
+    height:3rem;
+}
+.Messages{
+    padding: 1rem;
+    height: 41rem;
+    overflow: scroll;
+    margin: 1rem;
+}
+.sender > span{
+    background: #c9c9ff;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+.reciever > span{
+    background: #232479;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+}

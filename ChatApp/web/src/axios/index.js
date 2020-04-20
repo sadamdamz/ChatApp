@@ -28,11 +28,22 @@ export const login = user => {
 
 export const search = (q,user) =>{
   return axios
-  .get(`api/users?q=${q}&user=${user}`)
+  .get(`api/search?q=${q}&user=${user}`)
   .then(res =>{
       return res.data
   })
   .catch(err =>{
     console.log("user not found")
+  })
+}
+
+export const chats = (sender,reciever) =>{
+  return axios
+  .get(`api/chats?sender=${sender}&reciever=${reciever}`)
+  .then(res =>{
+    return res.data;
+  })
+  .catch(err =>{
+    console.log(err);
   })
 }
