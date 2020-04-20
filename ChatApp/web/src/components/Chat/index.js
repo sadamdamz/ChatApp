@@ -8,6 +8,7 @@ import { Input, Button, Form,Spin } from "antd";
 
 import "./index.css";
 
+
 const socketUrl = "http://localhost:5000";
 
 class Chat extends Component {
@@ -45,7 +46,6 @@ class Chat extends Component {
     chats(sender,reciever).then((res) => {
       this.setState({chats:res})
       this.setState({loader:false})
-      console.log("chats fetched to state"+ this.state.chats.userId)
     });
   };
 
@@ -54,21 +54,13 @@ class Chat extends Component {
     const reciever = this.state.reciever;
     const sender = this.state.sender;
     const { socket } = this.state;
-    socket.emit("message", message);
     socket.emit("sendMessage", sender, reciever, Message);
     socket.on('recieveMessage',(data)=>{
-      var newmessage = this.state.chats.concat(data);
-      this.setState({chats:newmessage})
-      console.log(this.state.chats)
+      this.setState({chats:this.state.chats.concat(data)})
     })
     socket.on('newmessages',data =>{
-      var newmessage = this.state.chats.concat(data);
-      this.setState({chats:newmessage});
-    })
-    socket.on('sendSocketId',data=>{
-      socket.emit("sendMessage",{data:data,sender:sender,reciever:reciever,Message:Message})
-    })
-    
+      this.setState({chats:this.state.chats.concat(data)})
+    }) 
   };
 
   onFinishFailed = (errorInfo) => {

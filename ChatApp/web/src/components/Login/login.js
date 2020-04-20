@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Input, Button, message } from "antd";
 import { login } from "../../axios/index";
+import {withRouter} from 'react-router-dom';
 import "../Signin/index.css";
 
 const layout = {
@@ -27,9 +28,8 @@ class Login extends Component {
         this.setState({token:response})
         localStorage.setItem("usertoken", this.state.token);
         var toke = this.state.token;
-        console.log(this.props.history)
         if(toke){
-          this.props.history.push("/chat");
+          this.props.history.push('/chat');
         }
 
       }
@@ -88,4 +88,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

@@ -11,13 +11,7 @@ module.exports = function(socket){
         const userId = userIds.userId
         privateUsers[userId] = socket.id;
         socket.emit('sendSocketid',privateUsers[userId]);
-    })
-
-    socket.on('message',(message)=>{
-        var chats = message.message;
-        socket.emit('chats',chats)
-    })
-    socket.on('clickedUser',(to)=>{
+        console.log('user connected'+ ' ' +privateUsers[userId])
     })
 
     socket.on('sendMessage',(sender,reciever,Message)=>{
@@ -28,6 +22,7 @@ module.exports = function(socket){
             to:reciever,
             message:Message
         }
+        io.to(user).emit('newmessages',(data));
         var chat = new Chat({
             from:sender,
             to:reciever,
@@ -40,6 +35,5 @@ module.exports = function(socket){
                 socket.emit('recieveMessage',(data))
             }
         })
-        io.to(user).emit('newmessages',(data));
     })
 }

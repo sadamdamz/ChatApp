@@ -29,7 +29,7 @@ class App extends Component {
             token ? <Redirect from="/" exact to="/chat"/>:''
           }
           <Route exact  path="/" component={Signin} />
-          <Route  exact path="/login" component={Login} />
+          <Route  exact path="/login" component={Login} render={(props)=><Login {...props}/>}/>
           <ProtectedRoute  path="/chat" component={Chat} />
         </Switch>
       </Router>
