@@ -10,7 +10,7 @@ module.exports = function(socket){
         const userIds = jwt_decode(from);
         const userId = userIds.userId
         privateUsers[userId] = socket.id;
-        io.emit('userConnected',userId)
+        socket.emit('sendSocketid',privateUsers[userId]);
     })
 
     socket.on('message',(message)=>{
@@ -21,6 +21,13 @@ module.exports = function(socket){
     })
 
     socket.on('sendMessage',(sender,reciever,Message)=>{
+        var user = privateUsers[reciever]
+        console.log(user);
+        var data = {
+            from:sender,
+            to:reciever,
+            message:Message
+        }
         var chat = new Chat({
             from:sender,
             to:reciever,
@@ -30,10 +37,9 @@ module.exports = function(socket){
             if(err){
                 console.log(err)
             }else{
-                console.log('chat saved sucesss'+data);
-                var socketId = privateUsers[data.reciever];
                 socket.emit('recieveMessage',(data))
             }
         })
+        io.to(user).emit('newmessages',(data));
     })
 }

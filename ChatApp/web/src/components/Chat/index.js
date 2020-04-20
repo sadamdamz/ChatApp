@@ -27,15 +27,9 @@ class Chat extends Component {
 
   initSocket = () => {
     const socket = io(socketUrl);
-    socket.on("connect", () => {
-      console.log("conected");
-    });
     const token = localStorage.getItem("usertoken");
     socket.emit("fromUser", token);
     this.setState({ socket });
-    socket.on("userConnected", (userId) => {
-      this.setState({ sender: userId });
-    });
   };
 
   setUser = (to) => {
@@ -62,14 +56,19 @@ class Chat extends Component {
     const { socket } = this.state;
     socket.emit("message", message);
     socket.emit("sendMessage", sender, reciever, Message);
-    socket.on('liveMessage',(data)=>{
-      console.log(`live socket data message ${data}`)
-    })
     socket.on('recieveMessage',(data)=>{
       var newmessage = this.state.chats.concat(data);
       this.setState({chats:newmessage})
       console.log(this.state.chats)
     })
+    socket.on('newmessages',data =>{
+      var newmessage = this.state.chats.concat(data);
+      this.setState({chats:newmessage});
+    })
+    socket.on('sendSocketId',data=>{
+      socket.emit("sendMessage",{data:data,sender:sender,reciever:reciever,Message:Message})
+    })
+    
   };
 
   onFinishFailed = (errorInfo) => {
@@ -78,7 +77,6 @@ class Chat extends Component {
 
   render() {
     const { socket, reciever, chats,sender } = this.state;
-    console.log(chats)
     return (
       <div className="mainLayout">
         <div>
