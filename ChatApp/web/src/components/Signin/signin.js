@@ -20,6 +20,9 @@ const token = localStorage.getItem("usertoken");
 class Signin extends Component {
   constructor(props) {
     super(props);
+    if(localStorage.getItem('usertoken')){
+      window.location.reload(false);
+    }
   }
 
   onFinish = values => {
