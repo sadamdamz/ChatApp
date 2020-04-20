@@ -6,7 +6,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 app.use(bodyParser.json())
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = module.exports.io = require('socket.io')(http);
 
 app.use(bodyParser.urlencoded({
     extended:true

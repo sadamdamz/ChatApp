@@ -5,15 +5,15 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 
 const User = require("../models/User");
+const Chat = require("../models/Chat")
 
 router.use(cors());
 process.env.SECRETKEY = "secret";
 
-router.get("/users", async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
     const query = req.query;
     const user = await User.find({ userId: query.q });
-    console.log(query)
     if (query.q != query.user) {
       res.send(user);
     } else{
@@ -69,7 +69,7 @@ router.post("/login", (req, res) => {
           };
           console.log(payload);
           let token = jwt.sign(payload, process.env.SECRETKEY, {
-            expiresIn: "1hr",
+            expiresIn: "24hr",
           });
           res.send(token);
         } else {
@@ -83,5 +83,24 @@ router.post("/login", (req, res) => {
       res.send(err);
     });
 });
+
+router.get('/chats',async(req,res)=>{
+  let query = req.query;
+  console.log(query)
+  try{
+  var chats = await Chat.find({
+    $and: [
+        { $or: [{from:query.sender}, {from:query.reciever}] },
+        { $or: [{to:query.sender}, {to:query.reciever}] }
+    ]});
+  var chat = chats
+  console.log(chat)
+  return res.send(chat);
+  }
+  catch(err){
+    res.sendStatus(400)
+  }
+
+})
 
 module.exports = router;
