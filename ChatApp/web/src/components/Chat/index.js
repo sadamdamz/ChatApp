@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import io from "socket.io-client";
 import SideBar from "./sidebar";
 import Header from "./Header/header";
+import jwt_decode from "jwt-decode";
 import { chats } from "../../axios/index"
 import { Input, Button, Form,Spin } from "antd";
 
@@ -41,7 +42,10 @@ class Chat extends Component {
     const { socket } = this.state;
     socket.emit("clickedUser", to);
     this.setState({ reciever: to });
-    const sender = this.state.sender;
+    const tokens = localStorage.getItem('usertoken');
+    const token = jwt_decode(tokens);
+    const sender = token.userId;
+    this.setState({sender});
     const reciever = to;
     this.setState({loader:true})
     chats(sender,reciever).then((res) => {
@@ -62,7 +66,9 @@ class Chat extends Component {
       console.log(`live socket data message ${data}`)
     })
     socket.on('recieveMessage',(data)=>{
-      this.setState({ chats: [...this.state.chats,data] });
+      var newmessage = this.state.chats.concat(data);
+      this.setState({chats:newmessage})
+      console.log(this.state.chats)
     })
   };
 
