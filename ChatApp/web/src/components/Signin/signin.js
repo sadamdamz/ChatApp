@@ -1,37 +1,36 @@
 import React, { Component } from "react";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
-import {register} from '../../axios/index';
+import { register } from "../../axios/index";
 import "./index.css";
 import "antd/dist/antd.css";
+import { withRouter } from "react-router-dom";
 
 const layout = {
   labelCol: {
-    span: 24,
+    span: 24
   },
   wrapperCol: {
-    span: 24,
-  },
+    span: 24
+  }
 };
 
-const token = localStorage.getItem('usertoken');
+const token = localStorage.getItem("usertoken");
 
 class Signin extends Component {
   constructor(props) {
     super(props);
   }
 
-  onFinish = (values) => {
-    register(values)
-    .then(res=>{
-      this.props.history.push('/login');
-    })
+  onFinish = values => {
+    register(values).then(res => {
+      this.props.history.push("/login");
+    });
   };
 
-  onFinishFailed = (errorInfo) => {
+  onFinishFailed = errorInfo => {
     console.log("Failed:", errorInfo);
   };
-
 
   render() {
     return (
@@ -48,8 +47,8 @@ class Signin extends Component {
               name="userId"
               rules={[
                 {
-                  required: true,
-                },
+                  required: true
+                }
               ]}
             >
               <Input />
@@ -60,8 +59,8 @@ class Signin extends Component {
               rules={[
                 {
                   type: "email",
-                  required: true,
-                },
+                  required: true
+                }
               ]}
             >
               <Input />
@@ -74,8 +73,8 @@ class Signin extends Component {
                 {
                   type: "string",
                   min: 6,
-                  required: true,
-                },
+                  required: true
+                }
               ]}
             >
               <Input.Password />
@@ -99,4 +98,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+export default withRouter(Signin);
