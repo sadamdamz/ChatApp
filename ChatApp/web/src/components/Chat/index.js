@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import SideBar from "./sidebar";
 import Header from "./Header/header";
 import { chats } from "../../axios/index"
-import { Input, Button, Form } from "antd";
+import { Input, Button, Form,Spin } from "antd";
 
 import "./index.css";
 
@@ -17,6 +17,7 @@ class Chat extends Component {
       reciever: null,
       chats: [],
       sender: null,
+      loader:false
     };
   }
   componentDidMount() {
@@ -42,8 +43,10 @@ class Chat extends Component {
     this.setState({ reciever: to });
     const sender = this.state.sender;
     const reciever = to;
+    this.setState({loader:true})
     chats(sender,reciever).then((res) => {
       this.setState({chats:res})
+      this.setState({loader:false})
       console.log("chats fetched to state"+ this.state.chats.userId)
     });
   };
@@ -83,7 +86,7 @@ class Chat extends Component {
               </div>
               <div>
                 <div className="Messages">
-                  {chats.length>0?chats.map((msg, index) => (
+                  {this.state.loader?<Spin size="large"/>:chats.length>0?chats.map((msg, index) => (
                     <div
                       style={{
                         textAlign: sender === msg.from ? "right" : "left",

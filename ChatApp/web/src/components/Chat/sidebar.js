@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Input } from "antd";
 import { search } from "../../axios/index";
 import jwt_decode from "jwt-decode";
+import {LogoutOutlined} from '@ant-design/icons'
 import './index.css'
 
 const {Search} = Input
@@ -11,7 +12,7 @@ class SideBar extends Component {
     super(props);
     this.state = {
       user: [],
-      profile:''
+      profile:'',
     };
   }
 
@@ -29,6 +30,11 @@ class SideBar extends Component {
     })
 
   }
+  logout =()=>{
+    localStorage.removeItem('usertoken');
+    window.location.reload(false);
+    // this.props.history.push('/')
+  }
 
   render() {
     return (
@@ -45,6 +51,7 @@ class SideBar extends Component {
               <div key={user.userId} className="user" onClick={()=>this.props.setUser(user.userId)}><h1>{user.userId}</h1></div>
             )):''
         }
+        <div className="logout" onClick={this.logout}><h1>Logout</h1><LogoutOutlined style={{color:'white'}}/></div>
       </div>
     );
   }

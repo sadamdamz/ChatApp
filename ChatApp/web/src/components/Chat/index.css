@@ -83,3 +83,20 @@
     padding: 10px;
     border-radius: 20px;
 }
+.logout{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    cursor: pointer;
+}
+.logout >h1{
+    color: white;
+    font-size: 20px;
+}
+.logout > span{
+    color: white;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
